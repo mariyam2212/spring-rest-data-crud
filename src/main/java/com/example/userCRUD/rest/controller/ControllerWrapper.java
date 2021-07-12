@@ -5,6 +5,7 @@
  */
 package com.example.userCRUD.rest.controller;
 
+import com.example.userCRED.constants.All_Constants;
 import static com.example.userCRED.constants.All_Constants.NO_USER_WITH_THIS_ID;
 import com.example.userCRED.rest.beanspack.MainUserBean;
 import com.example.userCRUD.bases.Output_Base;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -29,67 +31,81 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @RestController
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ControllerWrapper {
-
+public class ControllerWrapper implements All_Constants {
+    
     @Autowired
     private UserRepository userRepository;
 
-    //GET COMPLETE LIST OF USERS
+    //Get all users
     @RequestMapping(method = RequestMethod.GET, path = "/users")
-    public User_Output getUsers(HttpServletRequest request) {
-
+    public User_Output getUsers(@RequestParam(required = false) String name, HttpServletRequest request) {
+        
         List<UserInfo> user_list = new ArrayList<>();
         User_Output output = new User_Output();
-        user_list = userRepository.findAll();
-
+        if (name == null) {
+            userRepository.findAll().forEach(user_list::add);
+        } else {
+            userRepository.findByNameContaining(name).forEach(user_list::add);
+        }
+        
         if (user_list.isEmpty()) {
-            output.setMessage("No User !!!");
+            output.setMessage(NO_USER_LIST);
         } else {
             output.setUsers(user_list);
-            output.setMessage("List !!!");
         }
         return output;
-
+        
     }
 
-    //GET USER BY ID
+    //Get user by id
     @RequestMapping(method = RequestMethod.GET, path = "/users/{id}")
     public UserInfo getUserById(@PathVariable int id, HttpServletRequest request) {
         UserInfo out = new UserInfo();
-        Optional<UserInfo> output= userRepository.findById(id);
-        if(output.isPresent())
+        Optional<UserInfo> output = userRepository.findById(id);
+        if (output.isPresent()) {
             return output.get();
-        else
+        } else {
             out.setMessage(NO_USER_WITH_THIS_ID);
+        }
         return out;
     }
-
+    
     @RequestMapping(method = RequestMethod.POST, path = "/adduser")
     public Output_Base postAddUser(@RequestBody UserInfo input, HttpServletRequest request) {
-
+        
         MainUserBean mainUserBean = new MainUserBean();
-        Output_Base output = mainUserBean.addUser(input,userRepository);
+        Output_Base output = mainUserBean.addUser(input, userRepository);
         return output;
-
+        
     }
 
     //Update UserInfo
     @RequestMapping(method = RequestMethod.PUT, path = "/updateuser/{id}")
     public Output_Base putUpdateUser(@PathVariable int id, @RequestBody UserInfo input, HttpServletRequest request) {
-
+        
         MainUserBean mainUserBean = new MainUserBean();
-        Output_Base output = mainUserBean.updateUser(id,input,userRepository);
+        Output_Base output = mainUserBean.updateUser(id, input, userRepository);
         return output;
-
     }
 
     //Delete User
     @RequestMapping(method = RequestMethod.DELETE, path = "/deleteuser/{id}")
-    public Output_Base putUpdateUser(@PathVariable int id, HttpServletRequest request) {
-
+    public Output_Base putDeleteUser(@PathVariable int id, HttpServletRequest request) {
+        
         MainUserBean mainUserBean = new MainUserBean();
-        Output_Base outMssg = mainUserBean.deleteUser(id,userRepository);
+        Output_Base outMssg = mainUserBean.deleteUser(id, userRepository);
         return outMssg;
-
+        
     }
+
+    //Delete all Users
+    @RequestMapping(method = RequestMethod.DELETE, path = "/deleteuser")
+    public Output_Base putDeleteAllUser(HttpServletRequest request) {
+        
+        MainUserBean mainUserBean = new MainUserBean();
+        Output_Base outMssg = mainUserBean.deleteAllUser(userRepository);
+        return outMssg;
+        
+    }
+
 }

@@ -116,6 +116,13 @@ public class MainUserBean implements All_Constants {
         return output;
     }
 
+    public Output_Base deleteAllUser(UserRepository userRepository) {
+        Output_Base output = new Output_Base();
+        userRepository.deleteAll();
+        output.setMessage(USERS_REMOVED);
+        return output;
+    }
+
     public void initialiseUserList() {
         for (int i = 0; i < 5; i++) {
             UserInfo objU = new UserInfo(i, "User_" + i, emails.get(i), contacts.get(i), cities.get(i), "SDE_" + i);

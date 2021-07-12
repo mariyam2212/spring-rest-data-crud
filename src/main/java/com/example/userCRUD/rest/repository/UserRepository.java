@@ -16,6 +16,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 
 public interface UserRepository extends JpaRepository<UserInfo, Integer> {
-    List<UserInfo> findByContact(String contact);
-    List<UserInfo> findByName(String name);
+    List<UserInfo> findByNameContaining(String name);
 }
