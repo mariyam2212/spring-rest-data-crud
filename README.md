@@ -1,4 +1,4 @@
-# CRUD operations on a User m using REST APIs + Spring Data JPA
+# CRUD operations on a User using REST APIs + Spring Data JPA
 
 ![image](https://user-images.githubusercontent.com/32836978/125252990-9136b780-e316-11eb-88d7-b31f285164cd.png)
 
