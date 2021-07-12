@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.userCRED.rest.beanspack;
+package com.example.userCRUD.rest.beanspack;
 
-import com.example.userCRED.constants.All_Constants;
-import static com.example.userCRED.constants.All_Constants.NO_USER_WITH_THIS_ID;
+import com.example.userCRUD.constants.All_Constants;
+import static com.example.userCRUD.constants.All_Constants.NO_USER_WITH_THIS_ID;
 import com.example.userCRUD.bases.Output_Base;
 import com.example.userCRUD.rest.model.UserInfo;
 import com.example.userCRUD.rest.model.User_Output;

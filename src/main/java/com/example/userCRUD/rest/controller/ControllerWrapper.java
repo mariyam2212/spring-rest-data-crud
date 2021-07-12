@@ -5,9 +5,9 @@
  */
 package com.example.userCRUD.rest.controller;
 
-import com.example.userCRED.constants.All_Constants;
-import static com.example.userCRED.constants.All_Constants.NO_USER_WITH_THIS_ID;
-import com.example.userCRED.rest.beanspack.MainUserBean;
+import com.example.userCRUD.constants.All_Constants;
+import static com.example.userCRUD.constants.All_Constants.NO_USER_WITH_THIS_ID;
+import com.example.userCRUD.rest.beanspack.MainUserBean;
 import com.example.userCRUD.bases.Output_Base;
 import com.example.userCRUD.rest.model.UserInfo;
 import com.example.userCRUD.rest.model.User_Output;
